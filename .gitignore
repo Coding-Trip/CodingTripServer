@@ -1,0 +1,10 @@
+# Mac oS
+.DS_Store
+
+# Kotlin
+*.iml
+.gradle
+/local.properties
+/.idea
+/build
+/captures
