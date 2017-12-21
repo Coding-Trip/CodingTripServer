@@ -1,0 +1,1 @@
+web: java -jar build/libs/CodingTripServer-0.1.jar

@@ -1,0 +1,8 @@
+{
+  "name": "Coding Trip Server",
+  "description": "Server side for Coding Trip app",
+  "image": "heroku/gradle",
+  "addons": [
+    "heroku-postgresql"
+  ]
+}

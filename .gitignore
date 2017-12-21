@@ -8,3 +8,6 @@
 /.idea
 /build
 /captures
+
+# env
+.env

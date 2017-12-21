@@ -26,6 +26,7 @@ repositories {
     mavenCentral()
     maven { url "http://dl.bintray.com/kotlin/ktor" }
     maven { url "https://dl.bintray.com/kotlin/kotlinx" }
+    maven { url "https://dl.bintray.com/kotlin/exposed" }
 }
 
 dependencies {
@@ -37,9 +38,11 @@ dependencies {
     compile "io.ktor:ktor-server-netty:$ktor_version"
     compile "io.ktor:ktor-jackson:$ktor_version"
 
-    // data
-    compile ('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.2')
+    // db
+    compile 'org.jetbrains.exposed:exposed:0.9.1'
 
+    // json
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.2')
 
     // Logger
     compile "ch.qos.logback:logback-classic:1.2.1"
@@ -59,4 +62,26 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/lib"
+    from(configurations.compile)
+}
+stage.dependsOn(copyToLib)
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'io.ktor.server.netty.DevelopmentEngine',
+                'Implementation-Title': 'CodingTrip',
+                'Implementation-Version': '0.1'
+    }
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }

@@ -15,7 +15,6 @@ import io.ktor.routing.get
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-
 /**
  * Created by shunsuke on 2017/12/19.
  */
@@ -32,6 +31,10 @@ fun Application.main() {
         }
     }
     install(Routing) {
+        get("/") {
+            call.respond("Welcom to Coding Trip")
+        }
+
         get("/hello") {
             call.respond("Hello world from Ktor!")
         }
